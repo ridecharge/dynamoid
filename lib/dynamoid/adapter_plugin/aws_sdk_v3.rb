@@ -65,11 +65,15 @@ module Dynamoid
         if Dynamoid::Config.endpoint?
           @connection_hash[:endpoint] = Dynamoid::Config.endpoint
         end
-        if Dynamoid::Config.access_key?
-          @connection_hash[:access_key_id] = Dynamoid::Config.access_key
-        end
-        if Dynamoid::Config.secret_key?
-          @connection_hash[:secret_access_key] = Dynamoid::Config.secret_key
+        if Dynamoid::Config.credentials?
+          @connection_hash[:credentials] = Dynamoid::Config.credentials
+        else
+          if Dynamoid::Config.access_key?
+            @connection_hash[:access_key_id] = Dynamoid::Config.access_key
+          end
+          if Dynamoid::Config.secret_key?
+            @connection_hash[:secret_access_key] = Dynamoid::Config.secret_key
+          end
         end
         if Dynamoid::Config.region?
           @connection_hash[:region] = Dynamoid::Config.region
